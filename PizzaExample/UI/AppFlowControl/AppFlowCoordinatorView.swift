@@ -8,11 +8,26 @@
 import SwiftUI
 
 struct AppFlowCoordinatorView: View {
+
+    @State var viewModel: AppFlowCoordinatorViewModel
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+
+        ZStack {
+            if viewModel.state.isLoading {
+                PizzaPreloaderView(viewModel: viewModel.makePizzaPreloaderViewModel())
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+            } else {
+                HomeView()
+                    .transition(.opacity)
+            }
+        }
+        .animation(.easeInOut(duration: 0.4), value: viewModel.state.isLoading)
+        .task {
+            await viewModel.fetchInitialData()
+        }
+
     }
+
 }
 
-#Preview {
-    AppFlowCoordinatorView()
-}
