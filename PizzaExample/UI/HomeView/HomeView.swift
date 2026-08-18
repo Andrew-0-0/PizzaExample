@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var selectedSize = "M"
     var body: some View {
 
         ZStack {
@@ -15,9 +16,11 @@ struct HomeView: View {
                 .resizable()
                 .ignoresSafeArea()
                 .padding(.bottom, 300)
+            Image(.banana)
+            SizePickerView(selectedSize: $selectedSize)
 
+                 .offset(y: 50)
         }
-
     }
 }
 
