@@ -8,24 +8,22 @@
 import SwiftUI
 
 struct SizePickerView: View {
-    @Binding var selectedSize: String
+    @Binding var selectedSize: PizzaSize
 
     var body: some View {
         HStack(spacing: 70) {
-            sizeButton("S")
-
-            sizeButton("M")
-                .offset(y: 40)
-
-            sizeButton("L")
+            ForEach(PizzaSize.allCases, id: \.self) { size in
+                sizeButton(size)
+                    .offset(y: size == .medium ? 40 : 0)
+            }
         }
     }
 
-    private func sizeButton(_ size: String) -> some View {
+    private func sizeButton(_ size: PizzaSize) -> some View {
         Button {
             selectedSize = size
         } label: {
-            Text(size)
+            Text(size.rawValue)
                 .font(.title3)
                 .fontWeight(.medium)
                 .foregroundStyle(

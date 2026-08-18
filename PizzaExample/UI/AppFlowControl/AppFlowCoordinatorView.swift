@@ -18,7 +18,7 @@ struct AppFlowCoordinatorView: View {
                 PizzaPreloaderView(viewModel: viewModel.makePizzaPreloaderViewModel())
                     .transition(.opacity.combined(with: .scale(scale: 0.98)))
             } else {
-                HomeView()
+                HomeView(viewModel: viewModel.makeHomeViewModel())
                     .transition(.opacity)
             }
         }

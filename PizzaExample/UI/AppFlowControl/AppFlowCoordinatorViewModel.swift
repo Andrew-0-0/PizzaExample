@@ -34,4 +34,8 @@ final class AppFlowCoordinatorViewModel {
         .init(state: .init())
     }
 
+    func makeHomeViewModel() -> HomeViewModel {
+        .init(state: .init())
+    }
+
 }
