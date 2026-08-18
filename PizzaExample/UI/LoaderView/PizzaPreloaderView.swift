@@ -8,11 +8,26 @@
 import SwiftUI
 
 struct PizzaPreloaderView: View {
+    @State var viewModel: PizzaPreloaderViewModel
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 20) {
+            Image("pizza\(viewModel.state.currentFrame)")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 180, height: 180)
+
+            Text("Loading...")
+                .font(.headline)
+                .foregroundColor(.secondary)
+        }
+        .onAppear {
+            viewModel.startAnimation()
+        }
+        .onDisappear {
+            viewModel.stopAnimation()
+        }
     }
 }
 
-#Preview {
-    PizzaPreloaderView()
-}
+
