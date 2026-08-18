@@ -8,10 +8,24 @@
 import SwiftUI
 
 @main
-struct PizzaExampleApp: App {
+struct PianoReaderApp: App {
+    @State var viewModel: AppFlowCoordinatorViewModel
+
+    init() {
+        let initialState = AppFlowCoordinatorViewModel.State()
+
+        _viewModel = State(
+            initialValue: AppFlowCoordinatorViewModel(
+                state: initialState,
+
+            )
+        )
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppFlowCoordinatorView(viewModel: viewModel)
+                .preferredColorScheme(.light)
         }
     }
 }
