@@ -15,6 +15,7 @@ struct HomeView: View {
                 .resizable()
                 .ignoresSafeArea()
                 .padding(.bottom, 300)
+
         }
 
     }
