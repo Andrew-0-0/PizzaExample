@@ -23,7 +23,7 @@ enum PizzaSize: String, CaseIterable {
 
 enum PizzaType: String, CaseIterable, Identifiable {
     case midnightHarvest = "Midnight Harvest"
-    case pepperoni = "Pepperoni"
+    case pepperoni = "Pepperoni Blast"
     case shrimptastic = "Shrimptastic"
 
     var id: String { rawValue }

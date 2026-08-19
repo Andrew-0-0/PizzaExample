@@ -44,6 +44,6 @@ struct PizzaCarouselView: View {
             .buttonStyle(.plain)
             .offset(x: 210)
         }
-        .frame(maxWidth: .infinity) // Allows side buttons space to render without getting clipped
+        .frame(maxWidth: .infinity) 
     }
 }
