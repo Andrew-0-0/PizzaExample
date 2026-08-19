@@ -18,19 +18,24 @@ struct HomeView: View {
                 .ignoresSafeArea()
                 .padding(.bottom, 300)
 
-            VStack {
-                PizzaCarouselView(
-                    currentImageName: viewModel.currentPizzaImageName,
-                    nextImageName: viewModel.nextPizzaImageName,
-                    currentDimension: viewModel.currentDimension
-                ) {
-                    viewModel.selectPizza(viewModel.nextPizza)
-                }
-                .animation(
-                    .spring(response: 0.4, dampingFraction: 0.7),
-                    value: viewModel.state.currentPizza
-                )
-            }
+                    PizzaCarouselView(
+                        currentImageName: viewModel.currentPizzaImageName,
+                        previousImageName: viewModel.previousPizzaImageName,
+                        nextImageName: viewModel.nextPizzaImageName,
+                        currentDimension: viewModel.currentDimension,
+                        onPreviousPizza: {
+                            viewModel.selectPizza(viewModel.previousPizza)
+                        },
+                        onNextPizza: {
+                            viewModel.selectPizza(viewModel.nextPizza)
+                        }
+                    )
+                    .animation(
+                        .spring(response: 0.4, dampingFraction: 0.7),
+                        value: viewModel.state.currentPizza
+                    )
+
+
             .padding(.bottom, 350)
 
             Image(.banana)

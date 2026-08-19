@@ -52,4 +52,17 @@ final class HomeViewModel {
     var nextPizzaImageName: String {
         nextPizza.imageName(for: state.selectedSize)
     }
+
+    var previousPizza: PizzaType {
+        let pizzas = PizzaType.allCases
+        guard let currentIndex = pizzas.firstIndex(of: state.currentPizza) else {
+            return pizzas[0]
+        }
+        let previousIndex = (currentIndex - 1 + pizzas.count) % pizzas.count
+        return pizzas[previousIndex]
+    }
+
+    var previousPizzaImageName: String {
+        previousPizza.imageName(for: state.selectedSize)
+    }
 }

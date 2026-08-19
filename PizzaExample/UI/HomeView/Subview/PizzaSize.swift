@@ -26,25 +26,33 @@ enum PizzaType: String, CaseIterable, Identifiable {
     case pepperoni = "Pepperoni"
     case shrimptastic = "Shrimptastic"
 
-
     var id: String { rawValue }
 
-    func imageName(for size: PizzaSize) -> String {
-        let prefix: String
+    // Dynamic prefix for asset naming
+    var assetPrefix: String {
         switch self {
-        case .midnightHarvest:
-            prefix = "midnightHarvest"
-        case .pepperoni:
-            prefix = "pepperoni"
-        case .shrimptastic:
-            prefix = "shrimptastic"
-
-        }
-
-        switch size {
-        case .small: return "\(prefix)Small"
-        case .medium: return "\(prefix)Medium"
-        case .large: return "\(prefix)Large"
+        case .midnightHarvest: return "midnightHarvest"
+        case .pepperoni: return "pepperoni"
+        case .shrimptastic: return "shrimptastic"
         }
     }
+
+    // Full pizza display name
+    func imageName(for size: PizzaSize) -> String {
+        switch size {
+        case .small: return "\(assetPrefix)Small"
+        case .medium: return "\(assetPrefix)Medium"
+        case .large: return "\(assetPrefix)Large"
+        }
+    }
+
+    // Dedicated side preview image names
+    var nextImageName: String {
+        "\(assetPrefix)Next"
+    }
+
+    var previousImageName: String {
+        "\(assetPrefix)Previous"
+    }
 }
+

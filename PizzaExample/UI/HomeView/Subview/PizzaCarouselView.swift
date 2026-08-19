@@ -8,20 +8,34 @@
 import SwiftUI
 
 struct PizzaCarouselView: View {
-
     let currentImageName: String
+    let previousImageName: String
     let nextImageName: String
     let currentDimension: CGFloat
 
+    let onPreviousPizza: () -> Void
     let onNextPizza: () -> Void
 
     var body: some View {
         ZStack {
+            // Previous Pizza (Left)
+            Button(action: onPreviousPizza) {
+                Image(previousImageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 110, height: 110)
+            }
+            .buttonStyle(.plain)
+            .offset(x: -210)
 
-            // Next pizza
-            Button {
-                onNextPizza()
-            } label: {
+            // Current Pizza (Center)
+            Image(currentImageName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: currentDimension, height: currentDimension)
+
+            // Next Pizza (Right)
+            Button(action: onNextPizza) {
                 Image(nextImageName)
                     .resizable()
                     .scaledToFit()
@@ -29,16 +43,7 @@ struct PizzaCarouselView: View {
             }
             .buttonStyle(.plain)
             .offset(x: 210)
-
-            // Current pizza
-            Image(currentImageName)
-                .resizable()
-                .scaledToFit()
-                .frame(
-                    width: currentDimension,
-                    height: currentDimension
-                )
         }
-        .clipped()
+        .frame(maxWidth: .infinity) // Allows side buttons space to render without getting clipped
     }
 }
