@@ -17,6 +17,10 @@ final class HomeViewModel {
         var pizzas: [Pizza] = []
         var errorMessage: String? = nil
 
+        var quantity: Int = 1
+
+     
+
         var selectedPizza: Pizza? {
             pizzas.first {
                 $0.name == currentPizza.rawValue
@@ -40,6 +44,20 @@ final class HomeViewModel {
               state.errorMessage = error.localizedDescription
           }
       }
+
+    func incrementQuantity() {
+        state.quantity += 1
+    }
+
+    func decrementQuantity() {
+        if state.quantity > 1 {
+            state.quantity -= 1
+        }
+    }
+
+    func addToCart() {
+        // Implement add to cart logic
+    }
 
 
     func selectSize(_ size: PizzaSize) {

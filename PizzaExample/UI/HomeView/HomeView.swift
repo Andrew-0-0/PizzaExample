@@ -56,22 +56,14 @@ struct HomeView: View {
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 30)
-
-                    Text(
-                        pizza.displayPrice,
-                        format: .currency(code: "USD")
-                    )
-                    .font(.callout)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.green)
                 }
                 .frame(maxWidth: .infinity)
                 .frame(maxHeight: .infinity, alignment: .bottom)
                 .padding(.bottom, 90)
             }
-
         }
 
+        bottomBar
         .task {
             await viewModel.loadPizzas()
         }
@@ -105,4 +97,51 @@ struct HomeView: View {
             .padding()
         }
     }
-}
+    @ViewBuilder
+      private var bottomBar: some View {
+          HStack(spacing: 16) {
+              // Stepper Capsule
+              HStack(spacing: 12) {
+                  Button(action: { viewModel.decrementQuantity() }) {
+                      Image(systemName: "minus")
+                          .font(.body.weight(.bold))
+                          .foregroundStyle(.black)
+                          .frame(width: 44, height: 44)
+                          .background(.white, in: Circle())
+                          .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
+                  }
+
+                  Text("\(viewModel.state.quantity)")
+                      .font(.headline)
+                      .frame(minWidth: 20)
+
+                  Button(action: { viewModel.incrementQuantity() }) {
+                      Image(systemName: "plus")
+                          .font(.body.weight(.bold))
+                          .foregroundStyle(.black)
+                          .frame(width: 44, height: 44)
+                          .background(.white, in: Circle())
+                          .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
+                  }
+              }
+              .padding(4)
+              .background(Color(white: 0.95), in: Capsule())
+
+
+
+              Spacer()
+
+              // Action Button
+              Button(action: { viewModel.addToCart() }) {
+                  Text("Add")
+                      .font(.headline)
+                      .foregroundStyle(.white)
+                      .padding(.horizontal, 28)
+                      .padding(.vertical, 14)
+                      .background(Color.cyan, in: Capsule())
+              }
+          }
+          .padding(.horizontal)
+      }
+  }
+
