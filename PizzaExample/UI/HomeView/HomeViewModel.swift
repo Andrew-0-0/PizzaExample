@@ -16,6 +16,12 @@ final class HomeViewModel {
         var selectedSize: PizzaSize = .medium
         var pizzas: [Pizza] = []
         var errorMessage: String? = nil
+
+        var selectedPizza: Pizza? {
+            pizzas.first {
+                $0.name == currentPizza.rawValue
+            }
+        }
     }
 
     private(set) var state: State
@@ -34,6 +40,7 @@ final class HomeViewModel {
               state.errorMessage = error.localizedDescription
           }
       }
+
 
     func selectSize(_ size: PizzaSize) {
         state.selectedSize = size

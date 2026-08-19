@@ -27,7 +27,6 @@ struct PizzaExampleApp: App {
     var body: some Scene {
         WindowGroup {
             AppFlowCoordinatorView(viewModel: viewModel)
-                .preferredColorScheme(.light)
         }
     }
 }

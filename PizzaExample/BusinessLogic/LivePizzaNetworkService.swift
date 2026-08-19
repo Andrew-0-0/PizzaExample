@@ -12,6 +12,7 @@ protocol PizzaNetworkService {
 }
 
 final class LivePizzaNetworkService: PizzaNetworkService {
+
     private let urlString = "https://oursongapp.com/api/pizzas"
     private let session: URLSession
 
@@ -32,7 +33,8 @@ final class LivePizzaNetworkService: PizzaNetworkService {
         }
 
         do {
-            return try JSONDecoder().decode([Pizza].self, from: data)
+            let decodedResponse = try JSONDecoder().decode(PizzaResponse.self, from: data)
+            return decodedResponse.pizzas
         } catch {
             throw NetworkError.decodingFailed
         }

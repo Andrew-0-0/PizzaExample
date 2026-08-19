@@ -47,7 +47,33 @@ struct HomeView: View {
                     }
                 )
             )
-            .offset(y: 50)
+            .offset(y: 30)
+
+            if let pizza = viewModel.state.selectedPizza  {
+                VStack(spacing: 8) {
+                    Text(pizza.description)
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 30)
+
+                    Text(
+                        pizza.displayPrice,
+                        format: .currency(code: "USD")
+                    )
+                    .font(.callout)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.green)
+                }
+                .frame(maxWidth: .infinity)
+                .frame(maxHeight: .infinity, alignment: .bottom)
+                .padding(.bottom, 90)
+            }
+
+        }
+
+        .task {
+            await viewModel.loadPizzas()
         }
         .toolbar { toolbarItems }
         .navigationBarTitleDisplayMode(.inline)
