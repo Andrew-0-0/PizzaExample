@@ -20,7 +20,7 @@ struct AppFlowCoordinatorView: View {
             } else {
 
                 NavigationStack {
-                    HomeView(viewModel: HomeViewModel())
+                    HomeView(viewModel: viewModel.makeHomeViewModel())
                 }
                     .transition(.opacity)
             }

@@ -8,15 +8,17 @@
 import SwiftUI
 
 @main
-struct PianoReaderApp: App {
+struct PizzaExampleApp: App {
     @State var viewModel: AppFlowCoordinatorViewModel
 
     init() {
         let initialState = AppFlowCoordinatorViewModel.State()
+        let appEnvironment = AppEnvironment.make()
 
         _viewModel = State(
             initialValue: AppFlowCoordinatorViewModel(
                 state: initialState,
+                appEnvironment: appEnvironment,
 
             )
         )

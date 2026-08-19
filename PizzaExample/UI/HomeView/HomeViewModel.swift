@@ -14,13 +14,26 @@ final class HomeViewModel {
     nonisolated struct State {
         var currentPizza: PizzaType = .midnightHarvest
         var selectedSize: PizzaSize = .medium
+        var pizzas: [Pizza] = []
+        var errorMessage: String? = nil
     }
 
     private(set) var state: State
+    private let appEnvironment: AppEnvironment
 
-    init(state: State = State()) {
+    init(state: State,
+         appEnvironment: AppEnvironment) {
         self.state = state
+        self.appEnvironment = appEnvironment
     }
+
+    func loadPizzas() async {
+          do {
+             state.pizzas = try await appEnvironment.networkService.fetchPizzas()
+          } catch {
+              state.errorMessage = error.localizedDescription
+          }
+      }
 
     func selectSize(_ size: PizzaSize) {
         state.selectedSize = size
