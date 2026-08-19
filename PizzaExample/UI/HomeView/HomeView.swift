@@ -19,24 +19,31 @@ struct HomeView: View {
                 .padding(.bottom, 300)
 
             VStack {
-                Image(viewModel.currentPizzaImageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: viewModel.currentDimension, height: viewModel.currentDimension)
-
-                    .animation(.spring(response: 0.4, dampingFraction: 0.7), value: viewModel.state.selectedSize)
+                PizzaCarouselView(
+                    currentImageName: viewModel.currentPizzaImageName,
+                    nextImageName: viewModel.nextPizzaImageName,
+                    currentDimension: viewModel.currentDimension
+                ) {
+                    viewModel.selectPizza(viewModel.nextPizza)
+                }
+                .animation(
+                    .spring(response: 0.4, dampingFraction: 0.7),
+                    value: viewModel.state.currentPizza
+                )
             }
             .padding(.bottom, 350)
 
-                Image(.banana)
-                
-                SizePickerView(
-                    selectedSize: .binding(
-                        get: viewModel.state.selectedSize,
-                        set: { newSize in viewModel.selectSize(newSize) }
-                    )
+            Image(.banana)
+
+            SizePickerView(
+                selectedSize: .binding(
+                    get: viewModel.state.selectedSize,
+                    set: { newSize in
+                        viewModel.selectSize(newSize)
+                    }
                 )
-                .offset(y: 50)
+            )
+            .offset(y: 50)
         }
     }
 }

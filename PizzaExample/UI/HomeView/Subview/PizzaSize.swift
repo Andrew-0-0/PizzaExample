@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-// MARK: - Models
-
 enum PizzaSize: String, CaseIterable {
     case small = "S"
     case medium = "M"
@@ -24,21 +22,23 @@ enum PizzaSize: String, CaseIterable {
 }
 
 enum PizzaType: String, CaseIterable, Identifiable {
+    case midnightHarvest = "Midnight Harvest"
     case pepperoni = "Pepperoni"
     case shrimptastic = "Shrimptastic"
-    case midnightHarvest = "Midnight Harvest"
+
 
     var id: String { rawValue }
 
     func imageName(for size: PizzaSize) -> String {
         let prefix: String
         switch self {
+        case .midnightHarvest:
+            prefix = "midnightHarvest"
         case .pepperoni:
             prefix = "pepperoni"
         case .shrimptastic:
             prefix = "shrimptastic"
-        case .midnightHarvest:
-            prefix = "midnightHarvest"
+
         }
 
         switch size {
