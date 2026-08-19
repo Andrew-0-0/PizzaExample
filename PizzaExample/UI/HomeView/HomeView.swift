@@ -81,7 +81,6 @@ struct HomeView: View {
     }
 }
 
-
 #Preview {
     NavigationStack {
         HomeView(viewModel: HomeViewModel())
