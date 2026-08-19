@@ -12,13 +12,19 @@ struct PizzaCarouselView: View {
     let previousImageName: String
     let nextImageName: String
     let currentDimension: CGFloat
-
     let onPreviousPizza: () -> Void
     let onNextPizza: () -> Void
 
+    // Tracks slide direction for transitions
+    @State private var slideEdge: Edge = .trailing
+
     var body: some View {
         ZStack {
-            Button(action: onPreviousPizza) {
+            // Previous Pizza (Left)
+            Button {
+                slideEdge = .leading
+                onPreviousPizza()
+            } label: {
                 Image(previousImageName)
                     .resizable()
                     .scaledToFit()
@@ -27,12 +33,24 @@ struct PizzaCarouselView: View {
             .buttonStyle(.plain)
             .offset(x: -210)
 
+            // Current Pizza (Center)
             Image(currentImageName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: currentDimension, height: currentDimension)
+                .id(currentImageName) // Triggers insertion/removal transition
+                .transition(
+                    .asymmetric(
+                        insertion: .move(edge: slideEdge).combined(with: .opacity),
+                        removal: .move(edge: slideEdge == .trailing ? .leading : .trailing).combined(with: .opacity)
+                    )
+                )
 
-            Button(action: onNextPizza) {
+            // Next Pizza (Right)
+            Button {
+                slideEdge = .trailing
+                onNextPizza()
+            } label: {
                 Image(nextImageName)
                     .resizable()
                     .scaledToFit()
@@ -41,6 +59,6 @@ struct PizzaCarouselView: View {
             .buttonStyle(.plain)
             .offset(x: 210)
         }
-        .frame(maxWidth: .infinity) 
+        .frame(maxWidth: .infinity)
     }
 }

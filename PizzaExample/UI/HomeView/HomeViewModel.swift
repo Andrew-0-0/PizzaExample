@@ -11,12 +11,19 @@ import SwiftUI
 @MainActor
 final class HomeViewModel {
 
-     struct State {
+    struct State {
         var currentPizza: PizzaType = .midnightHarvest
         var selectedSize: PizzaSize = .medium
         var pizzas: [Pizza] = []
         var errorMessage: String? = nil
         var quantity: Int = 1
+        var isZoomed = false
+        var currentZoom: CGFloat = 1.0
+        var finalZoom: CGFloat = 1.0
+
+        var zoomImageName: String {
+            currentPizza.zoomImageName
+        }
 
         var selectedPizza: Pizza? {
             pizzas.first { $0.name == currentPizza.rawValue }
@@ -50,6 +57,33 @@ final class HomeViewModel {
             state.pizzas = try await appEnvironment.networkService.fetchPizzas()
         } catch {
             state.errorMessage = error.localizedDescription
+        }
+    }
+
+    // MARK: - Zoom Actions
+    func zoomIn() {
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+            state.isZoomed = true
+        }
+    }
+
+    func dismissZoom() {
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+            state.isZoomed = false
+            state.currentZoom = 1.0
+            state.finalZoom = 1.0
+        }
+    }
+
+    func updateZoomScale(_ magnification: CGFloat) {
+        let newScale = state.finalZoom * magnification
+        state.currentZoom = min(max(newScale, 0.8), 3.0)
+    }
+
+    func finalizeZoomScale() {
+        state.finalZoom = state.currentZoom
+        if state.currentZoom < 1.0 {
+            dismissZoom()
         }
     }
 

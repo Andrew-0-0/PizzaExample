@@ -37,6 +37,13 @@ struct HomeView: View {
 
             .padding(.bottom, 350)
 
+            .onTapGesture {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                    viewModel.zoomIn()
+                }
+
+            }
+
             Image(.banana)
 
             SizePickerView(
@@ -49,7 +56,7 @@ struct HomeView: View {
             )
             .offset(y: 30)
 
-            if let pizza = viewModel.state.selectedPizza  {
+            if let pizza = viewModel.state.selectedPizza {
                 VStack(spacing: 8) {
                     Text(pizza.description)
                         .font(.headline)
@@ -61,15 +68,45 @@ struct HomeView: View {
                 .frame(maxHeight: .infinity, alignment: .bottom)
                 .padding(.bottom, 90)
             }
+            if viewModel.state.isZoomed {
+                Color.black.opacity(0.6)
+                    .ignoresSafeArea()
+                    .transition(.opacity)
+                    .onTapGesture {
+                        viewModel.dismissZoom()
+                    }
+
+                Image(viewModel.state.zoomImageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(20)
+                    .scaleEffect(viewModel.state.currentZoom)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        viewModel.dismissZoom()
+                    }
+                    .simultaneousGesture(
+                        MagnificationGesture()
+                            .onChanged { value in
+                                viewModel.updateZoomScale(value)
+                            }
+                            .onEnded { _ in
+                                viewModel.finalizeZoomScale()
+                            }
+                    )
+                    .transition(.scale(scale: 0.8).combined(with: .opacity))
+                    .zIndex(1)
+            }
         }
 
         bottomBar
-        .task {
-            await viewModel.loadPizzas()
-        }
-        .toolbar { toolbarItems }
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackgroundVisibility(.visible, for: .navigationBar)
+            .task {
+                await viewModel.loadPizzas()
+            }
+            .toolbar { toolbarItems }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackgroundVisibility(.visible, for: .navigationBar)
     }
 
     @ToolbarContentBuilder
@@ -107,9 +144,13 @@ struct HomeView: View {
                         .foregroundStyle(.black)
                         .frame(width: 44, height: 44)
                         .background(.white, in: Circle())
-                        .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
+                        .shadow(
+                            color: .black.opacity(0.1),
+                            radius: 2,
+                            x: 0,
+                            y: 1
+                        )
                 }
-
                 Text("\(viewModel.state.quantity)")
                     .font(.headline)
                     .frame(minWidth: 10)
@@ -120,7 +161,12 @@ struct HomeView: View {
                         .foregroundStyle(.black)
                         .frame(width: 44, height: 44)
                         .background(.white, in: Circle())
-                        .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
+                        .shadow(
+                            color: .black.opacity(0.1),
+                            radius: 2,
+                            x: 0,
+                            y: 1
+                        )
                 }
             }
             .padding(4)
@@ -145,5 +191,4 @@ struct HomeView: View {
         }
         .padding(.horizontal)
     }
-  }
-
+}
