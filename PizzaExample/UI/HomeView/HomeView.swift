@@ -98,50 +98,53 @@ struct HomeView: View {
         }
     }
     @ViewBuilder
-      private var bottomBar: some View {
-          HStack(spacing: 16) {
-              // Stepper Capsule
-              HStack(spacing: 12) {
-                  Button(action: { viewModel.decrementQuantity() }) {
-                      Image(systemName: "minus")
-                          .font(.body.weight(.bold))
-                          .foregroundStyle(.black)
-                          .frame(width: 44, height: 44)
-                          .background(.white, in: Circle())
-                          .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
-                  }
+    private var bottomBar: some View {
+        HStack(spacing: 16) {
+            // Stepper Capsule
+            HStack(spacing: 12) {
+                Button(action: { viewModel.decrementQuantity() }) {
+                    Image(systemName: "minus")
+                        .font(.body.weight(.bold))
+                        .foregroundStyle(.black)
+                        .frame(width: 44, height: 44)
+                        .background(.white, in: Circle())
+                        .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
+                }
 
-                  Text("\(viewModel.state.quantity)")
-                      .font(.headline)
-                      .frame(minWidth: 20)
+                Text("\(viewModel.state.quantity)")
+                    .font(.headline)
+                    .frame(minWidth: 20)
 
-                  Button(action: { viewModel.incrementQuantity() }) {
-                      Image(systemName: "plus")
-                          .font(.body.weight(.bold))
-                          .foregroundStyle(.black)
-                          .frame(width: 44, height: 44)
-                          .background(.white, in: Circle())
-                          .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
-                  }
-              }
-              .padding(4)
-              .background(Color(white: 0.95), in: Capsule())
+                Button(action: { viewModel.incrementQuantity() }) {
+                    Image(systemName: "plus")
+                        .font(.body.weight(.bold))
+                        .foregroundStyle(.black)
+                        .frame(width: 44, height: 44)
+                        .background(.white, in: Circle())
+                        .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
+                }
+            }
+            .padding(4)
+            .background(Color(white: 0.95), in: Capsule())
 
+            // Display Calculated Total Price
+            Text(viewModel.state.totalPrice, format: .currency(code: "USD"))
+                .font(.title2)
+                .fontWeight(.bold)
 
+            Spacer()
 
-              Spacer()
-
-              // Action Button
-              Button(action: { viewModel.addToCart() }) {
-                  Text("Add")
-                      .font(.headline)
-                      .foregroundStyle(.white)
-                      .padding(.horizontal, 28)
-                      .padding(.vertical, 14)
-                      .background(Color.cyan, in: Capsule())
-              }
-          }
-          .padding(.horizontal)
-      }
+            // Action Button
+            Button(action: { viewModel.addToCart() }) {
+                Text("Add")
+                    .font(.headline)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 28)
+                    .padding(.vertical, 14)
+                    .background(Color.cyan, in: Capsule())
+            }
+        }
+        .padding(.horizontal)
+    }
   }
 

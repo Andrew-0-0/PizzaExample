@@ -28,8 +28,10 @@ struct Pizza: Codable, Identifiable {
         case defaultSize = "default_size"
     }
 
-    // Helper property to grab the default size's price or fall back to the first variant
-    var displayPrice: Double {
-        variants.first(where: { $0.size == defaultSize })?.price ?? variants.first?.price ?? 0.0
-    }
+    func price(for size: PizzaSize) -> Double {
+           variants.first { $0.size.lowercased() == size.rawValue.lowercased() }?.price
+               ?? variants.first(where: { $0.size == defaultSize })?.price
+               ?? variants.first?.price
+               ?? 0.0
+       }
 }
