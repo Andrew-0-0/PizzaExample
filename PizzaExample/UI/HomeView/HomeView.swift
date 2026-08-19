@@ -100,7 +100,6 @@ struct HomeView: View {
     @ViewBuilder
     private var bottomBar: some View {
         HStack(spacing: 16) {
-            // Stepper Capsule
             HStack(spacing: 12) {
                 Button(action: { viewModel.decrementQuantity() }) {
                     Image(systemName: "minus")
@@ -113,7 +112,7 @@ struct HomeView: View {
 
                 Text("\(viewModel.state.quantity)")
                     .font(.headline)
-                    .frame(minWidth: 20)
+                    .frame(minWidth: 10)
 
                 Button(action: { viewModel.incrementQuantity() }) {
                     Image(systemName: "plus")
@@ -129,7 +128,7 @@ struct HomeView: View {
 
             // Display Calculated Total Price
             Text(viewModel.state.totalPrice, format: .currency(code: "USD"))
-                .font(.title2)
+                .font(.headline)
                 .fontWeight(.bold)
 
             Spacer()

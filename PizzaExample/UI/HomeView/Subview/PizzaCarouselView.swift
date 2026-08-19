@@ -18,7 +18,6 @@ struct PizzaCarouselView: View {
 
     var body: some View {
         ZStack {
-            // Previous Pizza (Left)
             Button(action: onPreviousPizza) {
                 Image(previousImageName)
                     .resizable()
@@ -28,13 +27,11 @@ struct PizzaCarouselView: View {
             .buttonStyle(.plain)
             .offset(x: -210)
 
-            // Current Pizza (Center)
             Image(currentImageName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: currentDimension, height: currentDimension)
 
-            // Next Pizza (Right)
             Button(action: onNextPizza) {
                 Image(nextImageName)
                     .resizable()
