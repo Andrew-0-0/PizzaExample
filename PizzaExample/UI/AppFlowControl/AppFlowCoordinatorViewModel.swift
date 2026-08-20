@@ -11,17 +11,24 @@ import SwiftUI
 @MainActor
 final class AppFlowCoordinatorViewModel {
 
-    struct State {
+   nonisolated struct State {
 
         var isLoading = true
 
     }
 
+    struct Environment {
+        let networkService: PizzaNetworkService
+    }
+
+
     private(set) var state: State
+    private let appEnvironment: AppEnvironment
 
-    init(state: State) {
+    init(state: State,
+         appEnvironment: AppEnvironment) {
         self.state = state
-
+        self.appEnvironment = appEnvironment
     }
 
     func fetchInitialData() async {
@@ -34,4 +41,10 @@ final class AppFlowCoordinatorViewModel {
         .init(state: .init())
     }
 
+    func makeHomeViewModel() -> HomeViewModel {
+        .init(
+            state: .init(), appEnvironment: appEnvironment,
+
+        )
+    }
 }

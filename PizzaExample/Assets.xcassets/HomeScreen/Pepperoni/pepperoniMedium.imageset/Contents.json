@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "pepperoniMedium.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
