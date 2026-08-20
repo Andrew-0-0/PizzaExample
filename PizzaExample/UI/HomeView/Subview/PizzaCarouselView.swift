@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct PizzaCarouselView: View {
+
+    @Binding var slideEdge: Edge
+    
     let currentImageName: String
     let previousImageName: String
     let nextImageName: String
     let currentDimension: CGFloat
     let onPreviousPizza: () -> Void
     let onNextPizza: () -> Void
-
-    // Tracks slide direction for transitions
-    @State private var slideEdge: Edge = .trailing
 
     var body: some View {
         ZStack {

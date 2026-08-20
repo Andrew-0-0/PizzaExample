@@ -19,6 +19,10 @@ struct HomeView: View {
                 .padding(.bottom, 300)
 
             PizzaCarouselView(
+                slideEdge: .binding(
+                    get:  viewModel.state.slideEdge,
+                    set: { newEdge in viewModel.setSlideEdge(newEdge) }
+                ),
                 currentImageName: viewModel.currentPizzaImageName,
                 previousImageName: viewModel.previousPizzaImageName,
                 nextImageName: viewModel.nextPizzaImageName,

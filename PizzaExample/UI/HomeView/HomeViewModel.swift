@@ -18,6 +18,7 @@ final class HomeViewModel {
         var errorMessage: String? = nil
         var quantity: Int = 1
         var isZoomed = false
+        var slideEdge: Edge = .trailing
         var currentZoom: CGFloat = 1.0
         var finalZoom: CGFloat = 1.0
 
@@ -51,6 +52,18 @@ final class HomeViewModel {
         self.state = state
         self.appEnvironment = appEnvironment
     }
+
+    func loadPizzas() async {
+        do {
+            state.pizzas = try await appEnvironment.networkService.fetchPizzas()
+        } catch {
+            state.errorMessage = error.localizedDescription
+        }
+    }
+
+    func setSlideEdge(_ edge: Edge) {
+            state.slideEdge = edge
+        }
 
     // MARK: - Zoom Actions
     func zoomIn() {
@@ -137,14 +150,5 @@ final class HomeViewModel {
 
     var previousPizzaImageName: String {
         previousPizza.imageName(for: state.selectedSize)
-    }
-
-
-    func loadPizzas() async {
-        do {
-            state.pizzas = try await appEnvironment.networkService.fetchPizzas()
-        } catch {
-            state.errorMessage = error.localizedDescription
-        }
     }
 }
