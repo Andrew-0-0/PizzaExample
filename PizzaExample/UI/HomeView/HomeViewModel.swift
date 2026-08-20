@@ -52,7 +52,6 @@ final class HomeViewModel {
         self.appEnvironment = appEnvironment
     }
 
-
     // MARK: - Zoom Actions
     func zoomIn() {
         withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {

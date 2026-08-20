@@ -70,7 +70,6 @@ struct HomeView: View {
             }
             if viewModel.state.isZoomed {
                 Image(viewModel.state.zoomImageName)
-                    .aspectRatio(contentMode: .fill)
                     .onTapGesture {
                         viewModel.dismissZoom()
                     }
