@@ -56,7 +56,7 @@ enum PizzaType: String, CaseIterable, Identifiable {
     }
 
     var zoomImageName: String {
-            // Option 1: If assets use rawValue ("Shrimptastic ZOOM")
+           
             "\(rawValue) ZOOM"
         }
 }

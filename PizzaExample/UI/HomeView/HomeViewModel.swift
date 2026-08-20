@@ -52,13 +52,6 @@ final class HomeViewModel {
         self.appEnvironment = appEnvironment
     }
 
-    func loadPizzas() async {
-        do {
-            state.pizzas = try await appEnvironment.networkService.fetchPizzas()
-        } catch {
-            state.errorMessage = error.localizedDescription
-        }
-    }
 
     // MARK: - Zoom Actions
     func zoomIn() {
@@ -145,5 +138,14 @@ final class HomeViewModel {
 
     var previousPizzaImageName: String {
         previousPizza.imageName(for: state.selectedSize)
+    }
+
+
+    func loadPizzas() async {
+        do {
+            state.pizzas = try await appEnvironment.networkService.fetchPizzas()
+        } catch {
+            state.errorMessage = error.localizedDescription
+        }
     }
 }

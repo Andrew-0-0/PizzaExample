@@ -69,20 +69,9 @@ struct HomeView: View {
                 .padding(.bottom, 90)
             }
             if viewModel.state.isZoomed {
-                Color.black.opacity(0.6)
-                    .ignoresSafeArea()
-                    .transition(.opacity)
-                    .onTapGesture {
-                        viewModel.dismissZoom()
-                    }
-
                 Image(viewModel.state.zoomImageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(20)
-                    .scaleEffect(viewModel.state.currentZoom)
                     .ignoresSafeArea()
+                    .aspectRatio(contentMode: .fill)
                     .onTapGesture {
                         viewModel.dismissZoom()
                     }
