@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct PizzaCarouselView: View {
-
-    @Binding var slideEdge: Edge
-    
     let currentImageName: String
     let previousImageName: String
     let nextImageName: String
     let currentDimension: CGFloat
     let onPreviousPizza: () -> Void
     let onNextPizza: () -> Void
+
+    @State private var slideEdge: Edge = .trailing // we can use "@Binding var slideEdge: Edge" instead but i got side effect with animation
 
     var body: some View {
         ZStack {
@@ -38,7 +37,7 @@ struct PizzaCarouselView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: currentDimension, height: currentDimension)
-                .id(currentImageName) // Triggers insertion/removal transition
+                .id(currentImageName) 
                 .transition(
                     .asymmetric(
                         insertion: .move(edge: slideEdge).combined(with: .opacity),

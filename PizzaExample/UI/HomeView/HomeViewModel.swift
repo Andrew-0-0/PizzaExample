@@ -18,7 +18,6 @@ final class HomeViewModel {
         var errorMessage: String? = nil
         var quantity: Int = 1
         var isZoomed = false
-        var slideEdge: Edge = .trailing
         var currentZoom: CGFloat = 1.0
         var finalZoom: CGFloat = 1.0
 
@@ -60,10 +59,6 @@ final class HomeViewModel {
             state.errorMessage = error.localizedDescription
         }
     }
-
-    func setSlideEdge(_ edge: Edge) {
-            state.slideEdge = edge
-        }
 
     // MARK: - Zoom Actions
     func zoomIn() {

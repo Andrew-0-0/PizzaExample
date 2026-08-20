@@ -27,11 +27,15 @@ struct Pizza: Codable, Identifiable {
         case id, name, description, variants
         case defaultSize = "default_size"
     }
+}
+
+extension Pizza {
 
     func price(for size: PizzaSize) -> Double {
-           variants.first { $0.size.lowercased() == size.rawValue.lowercased() }?.price
-               ?? variants.first(where: { $0.size == defaultSize })?.price
-               ?? variants.first?.price
-               ?? 0.0
-       }
+        variants.first { $0.size.lowercased() == size.rawValue.lowercased() }?
+            .price
+            ?? variants.first(where: { $0.size == defaultSize })?.price
+            ?? variants.first?.price
+            ?? 0.0
+    }
 }
